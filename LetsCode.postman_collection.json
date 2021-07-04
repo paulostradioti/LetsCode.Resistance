@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "a29e11d8-e19e-47c0-bd92-c8f655b5a453",
+		"name": "LetsCode",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a Rebel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set('lastRebelId', jsonData.id)\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/api/Rebel",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"Rebel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"Rebel",
+						"{{lastRebelId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Rebels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/Rebel",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"Rebel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{lastRebelId}}\",\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"Rebel",
+						"{{lastRebelId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiUrl",
+			"value": "https://localhost:44338"
+		},
+		{
+			"key": "lastRebelId",
+			"value": ""
+		},
+		{
+			"key": "randomAge",
+			"value": ""
+		}
+	]
+}

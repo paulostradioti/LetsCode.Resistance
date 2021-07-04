@@ -8,16 +8,12 @@ namespace LetsCode.Resistance.Infrastructure.Maps
     {
         public MapProfiles()
         {
-            CreateMap<RebelCreateRequestModel, Rebel>().AfterMap((model, rebel) =>
-            {
-                rebel.Location = new Location
-                {
-                    BaseName = model.BaseName,
-                    Latitude = model.Latitude,
-                    Longitude = model.Longitude
-                };
-            });
-
+            CreateMap<RebelCreateRequestModel, Rebel>().ReverseMap();
+            CreateMap<RebelLocationModel, Location>().ReverseMap();
+            CreateMap<RebelUpdateRequestModel, Rebel>().ReverseMap();
+            CreateMap<Location, Location>().ForMember(x => x.Id,
+                opt => opt.Ignore());
+            CreateMap<Rebel, Rebel>();
             CreateMap<LocationUpdateRequestModel, Location>();
         }
     }

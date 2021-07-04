@@ -1,12 +1,11 @@
-﻿using LetsCode.Resistance.Domain;
+﻿using AutoMapper;
+using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.RequestModels;
 using LetsCode.Resistance.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
 using System;
-using LetsCode.Resistance.Infrastructure.RequestModels;
+using System.Threading.Tasks;
 
 namespace LetsCode.Resistance.API.Controllers
 {
@@ -23,7 +22,6 @@ namespace LetsCode.Resistance.API.Controllers
             _mapper = mapper;
         }
 
-        
         [HttpGet]
         [SwaggerOperation(
             Summary = "Lists All Rebels",
@@ -69,10 +67,24 @@ namespace LetsCode.Resistance.API.Controllers
             return CreatedAtAction(nameof(Get), new { id = rebel.Id }, rebel);
         }
 
-
         [HttpPut("{id:guid}")]
-        public void Put(Guid id, [FromBody] RebelCreateRequestModel value)
+        [SwaggerOperation(
+            Summary = "Updates a Rebel Information",
+            Description = "Updates the Rebel information",
+            OperationId = "Rebel.Put",
+            Tags = new[] { "Rebel" })
+        ]
+        public async Task<IActionResult> Put(Guid id, [FromBody] RebelUpdateRequestModel request)
         {
+            var entity = _mapper.Map<Rebel>(request);
+
+            entity.Id = id;
+            var rebel = await _service.PutAsync(entity);
+
+            if (rebel == null)
+                return NotFound();
+
+            return CreatedAtAction(nameof(Get), new { id = rebel.Id }, rebel);
         }
 
         [HttpPatch("{id:guid}/Location")]
@@ -93,7 +105,6 @@ namespace LetsCode.Resistance.API.Controllers
             return CreatedAtAction(nameof(Get), new { id = rebel.Id }, rebel);
         }
 
-        
         [HttpDelete("{id:guid}")]
         [SwaggerOperation(
             Summary = "Deletes a Rebel by his or her ID",

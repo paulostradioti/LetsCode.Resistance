@@ -16,7 +16,6 @@ namespace LetsCode.Resistance.Infrastructure.Extensions
 
         public static void RegisterServices(this IServiceCollection services)
         {
-
             services.AddTransient<IRepository<Rebel>, Repository<Rebel>>();
             services.AddTransient<IRebelService, RebelService>();
             services.AddAutoMapper(typeof(MapProfiles));

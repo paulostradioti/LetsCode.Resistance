@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.RequestModels;
 
 namespace LetsCode.Resistance.Infrastructure.Services
 {
@@ -12,5 +13,6 @@ namespace LetsCode.Resistance.Infrastructure.Services
     {
 
         Task<Rebel> UpdateRebelLocationAsync(Guid requestRebelId, Location entity, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Rebel> PutAsync(Rebel request, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
