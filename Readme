@@ -1,9 +1,14 @@
-# Heading 1
+# README 
+**LetsCode Star Wars Resistance Social Network API**
 
 ## Further Work
 * Track the Treason Reports to avoid that the same Rebel reports the same traitor more then once
-* Allow only items that have points to be passed in the Inventory during a Rebel Insertion in the system
+* Map entities into response models to avoid expose unnecessary implementation/entity model details.
 
 
 ## Assumptions
 * Since the Traitors should not appear in any reports, it doesn't make sense to list them among the Rebels in the _GET api/Rebel_ endpoint.
+
+## Comments on Decisions
+* I opted to use Automapper to map request and response models into database entities.
+* The Prices (in points) for each allowed Inventory item is stored in the database. This will simplify the process of allowing the trade of new items when necessary. All we have to do is to insert the new item name and price in the Price table and when an item of this type is passed in the Rebels inventory it will be ready to be traded.

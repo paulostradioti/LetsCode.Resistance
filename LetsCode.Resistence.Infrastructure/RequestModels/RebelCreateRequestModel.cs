@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using LetsCode.Resistance.Domain;
+﻿using LetsCode.Resistance.Domain;
+using System.Collections.Generic;
 
 namespace LetsCode.Resistance.Infrastructure.RequestModels
 {

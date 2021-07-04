@@ -20,6 +20,7 @@ namespace LetsCode.Resistance.Infrastructure.Respositories
         Task<T> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
 
         Task<IEnumerable<T>> ListAsync(CancellationToken cancellationToken = default);
+
         IQueryable<T> AsQueryable(CancellationToken cancellationToken = default);
     }
 }

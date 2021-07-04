@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using LetsCode.Resistance.Domain;
+﻿using LetsCode.Resistance.Domain;
 using LetsCode.Resistance.Infrastructure.Maps;
 using LetsCode.Resistance.Infrastructure.Respositories;
 using LetsCode.Resistance.Infrastructure.Services;
+using LetsCode.Resistance.Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace LetsCode.Resistance.Infrastructure.Extensions
 {
@@ -21,6 +22,7 @@ namespace LetsCode.Resistance.Infrastructure.Extensions
             services.AddTransient<IRepository<Rebel>, Repository<Rebel>>();
             services.AddTransient<IRebelService, RebelService>();
             services.AddTransient<IRepository<Price>, Repository<Price>>();
+            services.AddTransient<ITradeService, TradeService>();
             services.AddAutoMapper(typeof(MapProfiles));
         }
 

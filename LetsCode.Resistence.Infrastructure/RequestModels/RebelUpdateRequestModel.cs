@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LetsCode.Resistance.Domain;
+﻿using LetsCode.Resistance.Domain;
+using System;
 
 namespace LetsCode.Resistance.Infrastructure.RequestModels
 {

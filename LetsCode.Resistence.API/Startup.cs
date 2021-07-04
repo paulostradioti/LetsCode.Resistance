@@ -1,3 +1,4 @@
+using System;
 using LetsCode.Resistance.Infrastructure;
 using LetsCode.Resistance.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -23,7 +24,8 @@ namespace LetsCode.Resistance.API
                         Contact = new OpenApiContact
                         {
                             Email = "paulo@paulo.eti.br",
-                            Name = "Paulo Ricardo Stradioti"
+                            Name = "Paulo Ricardo Stradioti",
+                            Url = new Uri("https://github.com/paulostradioti/LetsCode.Resistance")
                         },
                         License = new OpenApiLicense
                         {
@@ -33,7 +35,7 @@ namespace LetsCode.Resistance.API
                 c.EnableAnnotations();
                 c.UseInlineDefinitionsForEnums();
             });
-            
+
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
             services.AddSwaggerGenNewtonsoftSupport();
 

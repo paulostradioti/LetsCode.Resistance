@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using LetsCode.Resistance.Infrastructure.Respositories;
 using System.Threading;
 using System.Threading.Tasks;
-using LetsCode.Resistance.Domain;
-using Microsoft.EntityFrameworkCore;
+using LetsCode.Resistance.Infrastructure.Respositories;
 
-namespace LetsCode.Resistance.Infrastructure.Services
+namespace LetsCode.Resistance.Infrastructure.Services.Base
 {
     public class Service<T> : IService<T> where T : class
     {

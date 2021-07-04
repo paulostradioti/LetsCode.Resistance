@@ -2,7 +2,6 @@
 using LetsCode.Resistance.Infrastructure.Extensions;
 using LetsCode.Resistance.Infrastructure.Maps;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 
 namespace LetsCode.Resistance.Infrastructure
 {
@@ -22,5 +21,6 @@ namespace LetsCode.Resistance.Infrastructure
 
         public DbSet<Rebel> Rebels { get; set; }
         public DbSet<Price> Prices { get; set; }
+        public DbSet<InventoryItem> InventoryItems { get; set; }
     }
 }

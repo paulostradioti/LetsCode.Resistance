@@ -1,5 +1,4 @@
 ﻿using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.Respositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

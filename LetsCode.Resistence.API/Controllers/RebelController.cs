@@ -5,16 +5,13 @@ using LetsCode.Resistance.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace LetsCode.Resistance.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RebelController : ControllerBase
+    public class RebelController : CustomControllerBase
     {
         private readonly IRebelService _service;
         private readonly IMapper _mapper;
@@ -134,7 +131,7 @@ namespace LetsCode.Resistance.API.Controllers
         public async Task<IActionResult> Post([FromRoute] Guid id)
         {
             var rebel = await _service.ReportAsync(id);
-            
+
             if (rebel == null)
                 return NotFound();
 
