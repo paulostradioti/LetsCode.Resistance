@@ -1,9 +1,11 @@
+using LetsCode.Resistance.Infrastructure;
 using LetsCode.Resistance.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 
 namespace LetsCode.Resistance.API
 {
@@ -29,9 +31,12 @@ namespace LetsCode.Resistance.API
                         }
                     });
                 c.EnableAnnotations();
+                c.UseInlineDefinitionsForEnums();
             });
+            
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+            services.AddSwaggerGenNewtonsoftSupport();
 
-            services.AddControllers().AddNewtonsoftJson();
             services.AddDatabaseServices();
             services.RegisterServices();
         }
@@ -56,6 +61,10 @@ namespace LetsCode.Resistance.API
             {
                 endpoints.MapControllers();
             });
+
+            using var scope = app.ApplicationServices.CreateScope();
+            using var context = scope.ServiceProvider.GetService<AppDbContext>();
+            ServicesExtensions.SeedDatabase(context);
         }
     }
 }

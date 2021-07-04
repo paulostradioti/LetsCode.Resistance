@@ -1,18 +1,17 @@
 ﻿using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.Respositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LetsCode.Resistance.Infrastructure.Maps
 {
-    public class RebelMap : EntityTypeConfiguration<Rebel>
+    public class InventoryItemMap : EntityTypeConfiguration<InventoryItem>
     {
-        public override void Map(EntityTypeBuilder<Rebel> builder)
+        public override void Map(EntityTypeBuilder<InventoryItem> builder)
         {
-            builder.ToTable("Rebel");
+            builder.ToTable("InventoryItem");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.HasOne(x => x.Location);
-            builder.HasMany<InventoryItem>(x => x.Inventory).WithOne();
         }
     }
 }

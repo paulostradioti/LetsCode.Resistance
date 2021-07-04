@@ -25,7 +25,11 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);"
+							"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);\r",
+							"\r",
+							"var genders = [\"Male\", \"Female\", \"Other\"];\r",
+							"var randomGender = genders[Math.floor(Math.random() * genders.length)];\r",
+							"pm.collectionVariables.set('randomGender', randomGender);"
 						],
 						"type": "text/javascript"
 					}
@@ -36,7 +40,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    },\r\n    \"Inventory\": [\r\n        {\r\n            \"Name\": \"Arma\",\r\n            \"Quantity\": 0\r\n        },\r\n        {\r\n            \"Name\": \"Munição\",\r\n            \"Quantity\": 2\r\n        },\r\n        {\r\n            \"Name\": \"Água\",\r\n            \"Quantity\": 5\r\n        },\r\n        {\r\n            \"Name\": \"Comida\",\r\n            \"Quantity\": 20\r\n        },\r\n        {\r\n            \"Name\": \"Arma\",\r\n            \"Quantity\": 5\r\n        },\r\n        {\r\n            \"Name\": \"Outra Coisa\",\r\n            \"Quantity\": 5\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -111,7 +115,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"{{lastRebelId}}\",\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"id\": \"{{lastRebelId}}\",\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,6 +131,74 @@
 						"api",
 						"Rebel",
 						"{{lastRebelId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Location",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rebelId\": \"{{lastRebelId}}\",\r\n  \"latitude\": {{$randomLatitude}},\r\n  \"longitude\": {{$randomLongitude}},\r\n  \"baseName\": \"{{$randomLoremWord}} {{$randomLoremWord}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}/Location",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"Rebel",
+						"{{lastRebelId}}",
+						"Location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"Rebel",
+						"{{lastRebelId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Report Treason",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}/Report",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"Rebel",
+						"{{lastRebelId}}",
+						"Report"
 					]
 				}
 			},
@@ -164,6 +236,10 @@
 		},
 		{
 			"key": "randomAge",
+			"value": ""
+		},
+		{
+			"key": "randomGender",
 			"value": ""
 		}
 	]

@@ -1,0 +1,9 @@
+# Heading 1
+
+## Further Work
+* Track the Treason Reports to avoid that the same Rebel reports the same traitor more then once
+* Allow only items that have points to be passed in the Inventory during a Rebel Insertion in the system
+
+
+## Assumptions
+* Since the Traitors should not appear in any reports, it doesn't make sense to list them among the Rebels in the _GET api/Rebel_ endpoint.

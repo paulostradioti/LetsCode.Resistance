@@ -8,7 +8,7 @@ namespace LetsCode.Resistance.Infrastructure.Maps
     {
         public override void Map(EntityTypeBuilder<Location> builder)
         {
-            builder.ToTable("Rebels");
+            builder.ToTable("Location");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
         }

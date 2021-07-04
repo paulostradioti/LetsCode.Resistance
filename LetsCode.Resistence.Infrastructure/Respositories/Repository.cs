@@ -15,7 +15,7 @@ namespace LetsCode.Resistance.Infrastructure.Respositories
             this.dbContext = dbContext;
         }
 
-        public async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
         {
             dbContext.Set<T>().Add(entity);
             await SaveChangesAsync(cancellationToken);
@@ -23,25 +23,25 @@ namespace LetsCode.Resistance.Infrastructure.Respositories
             return entity;
         }
 
-        public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
         {
             dbContext.Entry(entity).State = EntityState.Modified;
             await SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
         {
             dbContext.Set<T>().Remove(entity);
             await SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
             dbContext.Set<T>().RemoveRange(entities);
             await SaveChangesAsync(cancellationToken);
         }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             await dbContext.SaveChangesAsync(cancellationToken);
         }

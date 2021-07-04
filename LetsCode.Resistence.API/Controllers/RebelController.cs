@@ -5,6 +5,9 @@ using LetsCode.Resistance.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace LetsCode.Resistance.API.Controllers
@@ -119,6 +122,23 @@ namespace LetsCode.Resistance.API.Controllers
                 return Ok();
 
             return NotFound();
+        }
+
+        [HttpPost("{id:guid}/Report")]
+        [SwaggerOperation(
+            Summary = "Reports a Rebel as a Traitor",
+            Description = "Reports a Rebel as a Traitor",
+            OperationId = "Rebel.ReportAsync",
+            Tags = new[] { "Rebel" })
+        ]
+        public async Task<IActionResult> Post([FromRoute] Guid id)
+        {
+            var rebel = await _service.ReportAsync(id);
+            
+            if (rebel == null)
+                return NotFound();
+
+            return Ok();
         }
     }
 }

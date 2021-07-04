@@ -17,22 +17,22 @@ namespace LetsCode.Resistance.Infrastructure.Services
             _repository = repository;
         }
 
-        public virtual async Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default)
         {
             return await _repository.AddAsync(entity, cancellationToken);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _repository.ListAsync(cancellationToken);
         }
 
-        public virtual async Task<T> GetById(Guid id, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<T> GetById(Guid id, CancellationToken cancellationToken = default)
         {
             return await _repository.GetByIdAsync(id, cancellationToken);
         }
 
-        public virtual async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var entity = await _repository.GetByIdAsync(id, cancellationToken);
 
