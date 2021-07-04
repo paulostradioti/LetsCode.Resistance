@@ -23,6 +23,8 @@ namespace LetsCode.Resistance.Infrastructure.Extensions
             services.AddTransient<IRebelService, RebelService>();
             services.AddTransient<IRepository<Price>, Repository<Price>>();
             services.AddTransient<ITradeService, TradeService>();
+            services.AddTransient<IReportService, ReportService>();
+
             services.AddAutoMapper(typeof(MapProfiles));
         }
 

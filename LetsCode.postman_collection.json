@@ -6,203 +6,436 @@
 	},
 	"item": [
 		{
-			"name": "Create a Rebel",
-			"event": [
+			"name": "Rebel",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);\r",
-							"pm.collectionVariables.set('lastRebelId', jsonData.id)\r",
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
+					"name": "Create a Rebel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let lastButOne = pm.collectionVariables.get('lastRebelId');\r",
+									"pm.collectionVariables.set('lastButOne', lastButOne);\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set('lastRebelId', jsonData.id)\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);\r",
+									"\r",
+									"var genders = [\"Male\", \"Female\", \"Other\"];\r",
+									"var randomGender = genders[Math.floor(Math.random() * genders.length)];\r",
+									"pm.collectionVariables.set('randomGender', randomGender);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    },\r\n    \"Inventory\": [\r\n        {\r\n            \"Name\": \"Arma\",\r\n            \"Quantity\": 0\r\n        },\r\n        {\r\n            \"Name\": \"Munição\",\r\n            \"Quantity\": 2\r\n        },\r\n        {\r\n            \"Name\": \"Água\",\r\n            \"Quantity\": 5\r\n        },\r\n        {\r\n            \"Name\": \"Comida\",\r\n            \"Quantity\": 20\r\n        },\r\n        {\r\n            \"Name\": \"Arma\",\r\n            \"Quantity\": 5\r\n        },\r\n        {\r\n            \"Name\": \"Outra Coisa\",\r\n            \"Quantity\": 5\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel"
+							]
+						}
+					},
+					"response": []
 				},
 				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);\r",
-							"\r",
-							"var genders = [\"Male\", \"Female\", \"Other\"];\r",
-							"var randomGender = genders[Math.floor(Math.random() * genders.length)];\r",
-							"pm.collectionVariables.set('randomGender', randomGender);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    },\r\n    \"Inventory\": [\r\n        {\r\n            \"Name\": \"Arma\",\r\n            \"Quantity\": 0\r\n        },\r\n        {\r\n            \"Name\": \"Munição\",\r\n            \"Quantity\": 2\r\n        },\r\n        {\r\n            \"Name\": \"Água\",\r\n            \"Quantity\": 5\r\n        },\r\n        {\r\n            \"Name\": \"Comida\",\r\n            \"Quantity\": 20\r\n        },\r\n        {\r\n            \"Name\": \"Arma\",\r\n            \"Quantity\": 5\r\n        },\r\n        {\r\n            \"Name\": \"Outra Coisa\",\r\n            \"Quantity\": 5\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel",
+								"{{lastRebelId}}"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{apiUrl}}/api/Rebel",
-					"host": [
-						"{{apiUrl}}"
-					],
-					"path": [
-						"api",
-						"Rebel"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get By Id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
-					"host": [
-						"{{apiUrl}}"
-					],
-					"path": [
-						"api",
-						"Rebel",
-						"{{lastRebelId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List All Rebels",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{apiUrl}}/api/Rebel",
-					"host": [
-						"{{apiUrl}}"
-					],
-					"path": [
-						"api",
-						"Rebel"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PUT",
-			"event": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"{{lastRebelId}}\",\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "List All Rebels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
-					"host": [
-						"{{apiUrl}}"
-					],
-					"path": [
-						"api",
-						"Rebel",
-						"{{lastRebelId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Patch Location",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"rebelId\": \"{{lastRebelId}}\",\r\n  \"latitude\": {{$randomLatitude}},\r\n  \"longitude\": {{$randomLongitude}},\r\n  \"baseName\": \"{{$randomLoremWord}} {{$randomLoremWord}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "PUT",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{lastRebelId}}\",\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel",
+								"{{lastRebelId}}"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}/Location",
-					"host": [
-						"{{apiUrl}}"
-					],
-					"path": [
-						"api",
-						"Rebel",
-						"{{lastRebelId}}",
-						"Location"
-					]
+				{
+					"name": "Patch Location",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"rebelId\": \"{{lastRebelId}}\",\r\n  \"latitude\": {{$randomLatitude}},\r\n  \"longitude\": {{$randomLongitude}},\r\n  \"baseName\": \"{{$randomLoremWord}} {{$randomLoremWord}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}/Location",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel",
+								"{{lastRebelId}}",
+								"Location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel",
+								"{{lastRebelId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report Treason",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}/Report",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel",
+								"{{lastRebelId}}",
+								"Report"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Delete",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}",
-					"host": [
-						"{{apiUrl}}"
+			"name": "Trade",
+			"item": [
+				{
+					"name": "Create Seller",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set('sellerId', jsonData.id)\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);\r",
+									"var genders = [\"Male\", \"Female\", \"Other\"];\r",
+									"var randomGender = genders[Math.floor(Math.random() * genders.length)];\r",
+									"pm.collectionVariables.set('randomGender', randomGender);"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						"api",
-						"Rebel",
-						"{{lastRebelId}}"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    },\r\n    \"Inventory\": [\r\n        {\r\n            \"name\": \"Comida\",\r\n            \"quantity\": 4\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Buyer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set('buyerId', jsonData.id)\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('randomAge', (pm.variables.replaceIn('{{$randomInt}}') % 100) + 1);\r",
+									"\r",
+									"var genders = [\"Male\", \"Female\", \"Other\"];\r",
+									"var randomGender = genders[Math.floor(Math.random() * genders.length)];\r",
+									"pm.collectionVariables.set('randomGender', randomGender);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    },\r\n    \"Inventory\": [\r\n        {\r\n            \"name\": \"Água\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/Rebel",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Rebel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Trade",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"buyer\": {\r\n        \"rebelId\": \"{{buyerId}}\",\r\n        \"tradingItems\": [\r\n            {\r\n                \"name\": \"Água\",\r\n                \"quantity\": 1\r\n            }\r\n        ]\r\n    },\r\n    \"seller\": {\r\n        \"rebelId\": \"{{sellerId}}\",\r\n        \"tradingItems\": [\r\n            {\r\n                \"name\": \"Comida\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/Trade",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Trade"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Report Treason",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{apiUrl}}/api/Rebel/{{lastRebelId}}/Report",
-					"host": [
-						"{{apiUrl}}"
-					],
-					"path": [
-						"api",
-						"Rebel",
-						"{{lastRebelId}}",
-						"Report"
-					]
+			"name": "Report",
+			"item": [
+				{
+					"name": "Traitors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Report/Traitors",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Report",
+								"Traitors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rebels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Report/Rebels",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Report",
+								"Rebels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Average Resource",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Report/AverageResource",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Report",
+								"AverageResource"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Losses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/Report/Losses",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"Report",
+								"Losses"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	],
 	"event": [
@@ -240,6 +473,18 @@
 		},
 		{
 			"key": "randomGender",
+			"value": ""
+		},
+		{
+			"key": "lastButOne",
+			"value": ""
+		},
+		{
+			"key": "sellerId",
+			"value": ""
+		},
+		{
+			"key": "buyerId",
 			"value": ""
 		}
 	]
