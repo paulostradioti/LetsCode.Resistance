@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LetsCode.Resistance.Infrastructure.Maps
+namespace LetsCode.Resistance.Infrastructure.Map
 {
     public class RebelMap : EntityTypeConfiguration<Rebel>
     {
@@ -12,7 +12,7 @@ namespace LetsCode.Resistance.Infrastructure.Maps
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.HasOne(x => x.Location);
-            builder.HasMany<InventoryItem>(x => x.Inventory).WithOne();
+            builder.HasMany(x => x.Inventory).WithOne();
         }
     }
 }

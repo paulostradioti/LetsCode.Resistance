@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.RequestModels;
-using LetsCode.Resistance.Infrastructure.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using System.Threading.Tasks;
+using LetsCode.Resistance.Infrastructure.Service.Interface;
 
 namespace LetsCode.Resistance.API.Controllers
 {

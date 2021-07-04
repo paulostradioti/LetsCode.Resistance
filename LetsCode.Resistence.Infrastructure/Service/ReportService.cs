@@ -1,12 +1,12 @@
-﻿using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.Respositories;
-using LetsCode.Resistance.Infrastructure.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.Repository;
+using LetsCode.Resistance.Infrastructure.Service.Interface;
+using Microsoft.EntityFrameworkCore;
 
-namespace LetsCode.Resistance.Infrastructure.Services
+namespace LetsCode.Resistance.Infrastructure.Service
 {
     public class ReportService : IReportService
     {
@@ -55,7 +55,7 @@ namespace LetsCode.Resistance.Infrastructure.Services
                 .Where(x => !x.IsTraitor)
                 .SelectMany(x => x.Inventory)
                 .GroupBy(g => g.Name)
-                .Select(g => new { Name = g.Key, Quantity = (double)g.Sum(x => x.Quantity)/rebelsCount }).ToList();
+                .Select(g => new { Name = g.Key, Quantity = (double)g.Sum(x => x.Quantity) / rebelsCount }).ToList();
 
             return rebelsInventory;
         }
@@ -68,14 +68,14 @@ namespace LetsCode.Resistance.Infrastructure.Services
                 .Where(x => x.IsTraitor)
                 .SelectMany(x => x.Inventory)
                 .GroupBy(g => g.Name)
-                .Select(g => new {Name = g.Key, Quantity = g.Sum(x => x.Quantity)}).ToList();
+                .Select(g => new { Name = g.Key, Quantity = g.Sum(x => x.Quantity) }).ToList();
 
             var lossesWithPrice = from item in rebelsInventory
-                join price in prices on item.Name equals price.ItemName
-                select new { ItemName = item.Name, LossInQuantity = item.Quantity, PartialLossInPoints = price.PriceInPoints * item.Quantity };
+                                  join price in prices on item.Name equals price.ItemName
+                                  select new { ItemName = item.Name, LossInQuantity = item.Quantity, PartialLossInPoints = price.PriceInPoints * item.Quantity };
 
             var partialLosses = lossesWithPrice.ToList();
-            var totalLoss = new {PartialLosses = partialLosses, TotalLossInPoints = partialLosses.Sum(x => x.PartialLossInPoints) };
+            var totalLoss = new { PartialLosses = partialLosses, TotalLossInPoints = partialLosses.Sum(x => x.PartialLossInPoints) };
 
             return await Task.FromResult(totalLoss);
         }

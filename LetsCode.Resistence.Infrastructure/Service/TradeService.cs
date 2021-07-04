@@ -1,26 +1,24 @@
-﻿using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.RequestModels;
-using LetsCode.Resistance.Infrastructure.Respositories;
-using LetsCode.Resistance.Infrastructure.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.Repository;
+using LetsCode.Resistance.Infrastructure.RequestModel;
+using LetsCode.Resistance.Infrastructure.Service.Interface;
+using Microsoft.EntityFrameworkCore;
 
-namespace LetsCode.Resistance.Infrastructure.Services
+namespace LetsCode.Resistance.Infrastructure.Service
 {
     public class TradeService : ITradeService
     {
         private readonly IRepository<Rebel> _rebelRepository;
         private readonly IRepository<Price> _priceRepository;
-        //private readonly IRepository<InventoryItem> _inventoryItemRepository;
 
         public TradeService(IRepository<Rebel> rebelRepository, IRepository<Price> priceRepository)
         {
             _rebelRepository = rebelRepository;
             _priceRepository = priceRepository;
-            //_inventoryItemRepository = inventoryItemRepository;
         }
 
         public async Task Trade(TradeRequestModel request)
@@ -48,11 +46,11 @@ namespace LetsCode.Resistance.Infrastructure.Services
 
             var sellingItemsWithPrice = from item in sellerItems
                                         join price in prices on item.Name equals price.ItemName
-                                        select new { ItemName = item.Name, Quantity = item.Quantity, Price = price.PriceInPoints };
+                                        select new { ItemName = item.Name, item.Quantity, Price = price.PriceInPoints };
 
             var buyingItemsWithPrice = from item in buyerItems
                                        join price in prices on item.Name equals price.ItemName
-                                       select new { ItemName = item.Name, Quantity = item.Quantity, Price = price.PriceInPoints };
+                                       select new { ItemName = item.Name, item.Quantity, Price = price.PriceInPoints };
 
             var sellingPoints = sellingItemsWithPrice.Sum(x => x.Price * x.Quantity);
             var buyingPoints = buyingItemsWithPrice.Sum(x => x.Price * x.Quantity);
@@ -99,7 +97,6 @@ namespace LetsCode.Resistance.Infrastructure.Services
                     buyer.Inventory.Add(buyerInventoryItem);
             });
 
-
             buyerItems.ForEach(boughtItem =>
             {
                 var buyerInventoryItem = buyer.Inventory.FirstOrDefault(x => x.Name.Equals(boughtItem.Name, StringComparison.InvariantCultureIgnoreCase)) ?? new InventoryItem();
@@ -110,11 +107,11 @@ namespace LetsCode.Resistance.Infrastructure.Services
 
                 var sellerInventoryItem = seller.Inventory.FirstOrDefault(x =>
                     x.Name.Equals(boughtItem.Name, StringComparison.InvariantCultureIgnoreCase)) ?? new InventoryItem
-                {
-                    Name = boughtItem.Name,
-                    Quantity = 0,
-                    RebelId = buyer.Id
-                };
+                    {
+                        Name = boughtItem.Name,
+                        Quantity = 0,
+                        RebelId = buyer.Id
+                    };
 
                 sellerInventoryItem.Quantity += boughtItem.Quantity;
                 if (!seller.Inventory.Contains(sellerInventoryItem))

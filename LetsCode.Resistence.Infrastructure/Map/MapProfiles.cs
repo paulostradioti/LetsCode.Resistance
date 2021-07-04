@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.RequestModels;
-using System.Linq;
+using LetsCode.Resistance.Infrastructure.RequestModel;
 
-namespace LetsCode.Resistance.Infrastructure.Maps
+namespace LetsCode.Resistance.Infrastructure.Map
 {
     public class MapProfiles : Profile
     {

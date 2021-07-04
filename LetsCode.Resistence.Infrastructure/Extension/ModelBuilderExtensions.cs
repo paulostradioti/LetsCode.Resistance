@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace LetsCode.Resistance.Infrastructure.Extensions
+namespace LetsCode.Resistance.Infrastructure.Extension
 {
     public static class ModelBuilderExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.Extensions;
-using LetsCode.Resistance.Infrastructure.Maps;
+using LetsCode.Resistance.Infrastructure.Extension;
+using LetsCode.Resistance.Infrastructure.Map;
 using Microsoft.EntityFrameworkCore;
 
 namespace LetsCode.Resistance.Infrastructure

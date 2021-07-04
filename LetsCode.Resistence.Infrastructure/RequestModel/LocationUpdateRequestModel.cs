@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LetsCode.Resistance.Infrastructure.RequestModels
+namespace LetsCode.Resistance.Infrastructure.RequestModel
 {
     public class LocationUpdateRequestModel
     {

@@ -1,14 +1,14 @@
 ﻿using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.Maps;
-using LetsCode.Resistance.Infrastructure.Respositories;
-using LetsCode.Resistance.Infrastructure.Services;
-using LetsCode.Resistance.Infrastructure.Services.Interfaces;
+using LetsCode.Resistance.Infrastructure.Map;
+using LetsCode.Resistance.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using LetsCode.Resistance.Infrastructure.Service;
+using LetsCode.Resistance.Infrastructure.Service.Interface;
 
-namespace LetsCode.Resistance.Infrastructure.Extensions
+namespace LetsCode.Resistance.Infrastructure.Extension
 {
     public static class ServicesExtensions
     {
@@ -59,7 +59,7 @@ namespace LetsCode.Resistance.Infrastructure.Extensions
             };
 
             await context.Prices.AddRangeAsync(prices);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

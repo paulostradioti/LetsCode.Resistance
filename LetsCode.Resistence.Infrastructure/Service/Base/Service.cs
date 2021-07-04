@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using LetsCode.Resistance.Infrastructure.Respositories;
+using LetsCode.Resistance.Infrastructure.Repository;
 
-namespace LetsCode.Resistance.Infrastructure.Services.Base
+namespace LetsCode.Resistance.Infrastructure.Service.Base
 {
     public class Service<T> : IService<T> where T : class
     {

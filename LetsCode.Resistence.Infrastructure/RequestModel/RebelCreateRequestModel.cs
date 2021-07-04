@@ -1,7 +1,7 @@
-﻿using LetsCode.Resistance.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using LetsCode.Resistance.Domain;
 
-namespace LetsCode.Resistance.Infrastructure.RequestModels
+namespace LetsCode.Resistance.Infrastructure.RequestModel
 {
     public class RebelCreateRequestModel
     {

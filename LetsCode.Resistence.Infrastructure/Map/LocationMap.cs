@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LetsCode.Resistance.Infrastructure.Maps
+namespace LetsCode.Resistance.Infrastructure.Map
 {
     public class LocationMap : EntityTypeConfiguration<Location>
     {

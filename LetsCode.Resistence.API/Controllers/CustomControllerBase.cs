@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace LetsCode.Resistance.API
+namespace LetsCode.Resistance.API.Controllers
 {
     public class CustomControllerBase : ControllerBase
     {
         [NonAction]
         public virtual InternalServerErrorObjectResult InternalServerError([ActionResultObjectValue] object error)
-            => new InternalServerErrorObjectResult(error);
+            => new(error);
     }
 
     [DefaultStatusCode(DefaultStatusCode)]

@@ -1,7 +1,7 @@
-﻿using LetsCode.Resistance.Domain;
-using System;
+﻿using System;
+using LetsCode.Resistance.Domain;
 
-namespace LetsCode.Resistance.Infrastructure.RequestModels
+namespace LetsCode.Resistance.Infrastructure.RequestModel
 {
     public class RebelUpdateRequestModel
     {

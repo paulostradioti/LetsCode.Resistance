@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LetsCode.Resistance.Infrastructure.Services.Base
+namespace LetsCode.Resistance.Infrastructure.Service.Base
 {
     public interface IService<T> where T : class
     {

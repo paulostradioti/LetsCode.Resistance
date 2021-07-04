@@ -1,12 +1,12 @@
-using System;
 using LetsCode.Resistance.Infrastructure;
-using LetsCode.Resistance.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
+using System;
+using LetsCode.Resistance.Infrastructure.Extension;
 
 namespace LetsCode.Resistance.API
 {

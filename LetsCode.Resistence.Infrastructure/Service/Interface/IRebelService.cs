@@ -1,10 +1,10 @@
-﻿using LetsCode.Resistance.Domain;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LetsCode.Resistance.Infrastructure.Services.Base;
+using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.Service.Base;
 
-namespace LetsCode.Resistance.Infrastructure.Services
+namespace LetsCode.Resistance.Infrastructure.Service.Interface
 {
     public interface IRebelService : IService<Rebel>
     {

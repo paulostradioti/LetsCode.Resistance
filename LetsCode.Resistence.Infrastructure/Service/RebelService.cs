@@ -1,15 +1,16 @@
-﻿using AutoMapper;
-using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.Respositories;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using LetsCode.Resistance.Infrastructure.Services.Base;
+using AutoMapper;
+using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.Repository;
+using LetsCode.Resistance.Infrastructure.Service.Base;
+using LetsCode.Resistance.Infrastructure.Service.Interface;
+using Microsoft.EntityFrameworkCore;
 
-namespace LetsCode.Resistance.Infrastructure.Services
+namespace LetsCode.Resistance.Infrastructure.Service
 {
     public class RebelService : Service<Rebel>, IRebelService
     {

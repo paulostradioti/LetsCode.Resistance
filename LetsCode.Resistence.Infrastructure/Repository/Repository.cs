@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace LetsCode.Resistance.Infrastructure.Respositories
+namespace LetsCode.Resistance.Infrastructure.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {

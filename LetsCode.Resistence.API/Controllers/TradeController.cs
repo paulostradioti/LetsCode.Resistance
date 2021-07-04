@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.RequestModels;
-using LetsCode.Resistance.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
+using LetsCode.Resistance.Infrastructure.RequestModel;
+using LetsCode.Resistance.Infrastructure.Service.Interface;
 
 namespace LetsCode.Resistance.API.Controllers
 {
@@ -14,12 +14,10 @@ namespace LetsCode.Resistance.API.Controllers
     public class TradeController : CustomControllerBase
     {
         private readonly ITradeService _service;
-        private readonly IMapper _mapper;
 
-        public TradeController(ITradeService service, IMapper mapper)
+        public TradeController(ITradeService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpPost]
