@@ -25,7 +25,7 @@ namespace LetsCode.Resistance.Infrastructure.Service
         {
             var totalCount = await _rebelRepository.AsQueryable().CountAsync();
             var traitorCount = await _rebelRepository.AsQueryable().CountAsync(x => x.IsTraitor);
-            var percentage = totalCount > 0 ? traitorCount / totalCount : 0;
+            var percentage = totalCount > 0 ? (double)traitorCount / totalCount : 0;
             return new
             {
                 totalCount,
@@ -39,7 +39,7 @@ namespace LetsCode.Resistance.Infrastructure.Service
         {
             var totalCount = await _rebelRepository.AsQueryable().CountAsync();
             var rebelsCount = await _rebelRepository.AsQueryable().CountAsync(x => !x.IsTraitor);
-            var percentage = totalCount > 0 ? rebelsCount / totalCount : 0;
+            var percentage = totalCount > 0 ? (double)rebelsCount / totalCount : 0;
             return new
             {
                 totalCount,
