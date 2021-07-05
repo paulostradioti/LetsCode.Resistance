@@ -6,41 +6,43 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LetsCode.Resistance.Domain;
 using LetsCode.Resistance.Infrastructure.Repository;
+using LetsCode.Resistance.Infrastructure.Repository.Base;
+using LetsCode.Resistance.Infrastructure.Repository.Interface;
 using LetsCode.Resistance.Infrastructure.Service.Base;
 using LetsCode.Resistance.Infrastructure.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace LetsCode.Resistance.Infrastructure.Service
 {
-    public class RebelService : Service<Rebel>, IRebelService
+    public class RebelService : IRebelService
     {
-        private const int TreasonCount = 3;
         private readonly IRepository<Rebel> _repository;
-        private readonly IRepository<Price> _priceRepository;
+        private readonly IPriceRepository _priceRepository;
         private readonly IMapper _mapper;
 
-        public RebelService(IRepository<Rebel> repository, IRepository<Price> priceRepository, IMapper mapper) : base(repository)
+        public RebelService(IRebelRepository repository, IPriceRepository priceRepository, IMapper mapper)
         {
             _repository = repository;
             _priceRepository = priceRepository;
             _mapper = mapper;
         }
 
-        public override async Task<Rebel> CreateAsync(Rebel entity, CancellationToken cancellationToken = default)
+        public async Task<Rebel> CreateAsync(Rebel entity, CancellationToken cancellationToken = default)
         {
-            var knownInventoryGroups = _priceRepository.AsQueryable().Select(x => x.ItemName).Distinct();
-            entity.Inventory = entity.Inventory.Where(x => knownInventoryGroups.Contains(x.Name)).ToList();
+            var prices = await _priceRepository.GetAllAsync(cancellationToken);
+            var inventoryItemNames = prices.Select(x => x.ItemName);
+            entity.Inventory = entity.Inventory.Where(x => inventoryItemNames.Contains(x.Name)).ToList();
 
-            return await base.CreateAsync(entity, cancellationToken);
+            return await _repository.AddAsync(entity, cancellationToken);
         }
 
-        public override async Task<Rebel> GetById(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Rebel> GetById(Guid id, CancellationToken cancellationToken = default)
         {
             return await _repository.AsQueryable().Include(x => x.Location)
                 .Include(x => x.Inventory).FirstOrDefaultAsync(x => x.Id.Equals(id) && !x.IsTraitor, cancellationToken: cancellationToken);
         }
 
-        public override async Task<IEnumerable<Rebel>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Rebel>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _repository.AsQueryable().Include(x => x.Inventory).Include(x => x.Location)
                 .Where(x => !x.IsTraitor).ToListAsync(cancellationToken);
@@ -66,7 +68,6 @@ namespace LetsCode.Resistance.Infrastructure.Service
                 return null;
 
             _mapper.Map(request, entity);
-
             await _repository.UpdateAsync(entity, cancellationToken);
 
             return entity;
@@ -74,15 +75,24 @@ namespace LetsCode.Resistance.Infrastructure.Service
 
         public async Task<Rebel> ReportAsync(Guid id, CancellationToken cancellationToken = default)
         {
+            var rebel = await _repository.GetByIdAsync(id, cancellationToken);
+            if (rebel == null) return null;
+
+            rebel.Report();
+            await _repository.UpdateAsync(rebel, cancellationToken);
+
+            return rebel;
+        }
+
+        public async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
             var entity = await _repository.GetByIdAsync(id, cancellationToken);
+
             if (entity == null)
-                return null;
+                return false;
 
-            entity.ReportCount++;
-            entity.IsTraitor = entity.ReportCount >= TreasonCount;
-            await _repository.UpdateAsync(entity, cancellationToken);
-
-            return entity;
+            await _repository.DeleteAsync(entity, cancellationToken);
+            return true;
         }
     }
 }

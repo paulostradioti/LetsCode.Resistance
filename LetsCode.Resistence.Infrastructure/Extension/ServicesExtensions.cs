@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using LetsCode.Resistance.Infrastructure.Repository.Base;
+using LetsCode.Resistance.Infrastructure.Repository.Interface;
 using LetsCode.Resistance.Infrastructure.Service;
 using LetsCode.Resistance.Infrastructure.Service.Interface;
 
@@ -19,9 +21,9 @@ namespace LetsCode.Resistance.Infrastructure.Extension
 
         public static void RegisterServices(this IServiceCollection services)
         {
-            services.AddTransient<IRepository<Rebel>, Repository<Rebel>>();
+            services.AddTransient<IRebelRepository, RebelRepository>();
             services.AddTransient<IRebelService, RebelService>();
-            services.AddTransient<IRepository<Price>, Repository<Price>>();
+            services.AddTransient<IPriceRepository, PriceRepository>();
             services.AddTransient<ITradeService, TradeService>();
             services.AddTransient<IReportService, ReportService>();
 

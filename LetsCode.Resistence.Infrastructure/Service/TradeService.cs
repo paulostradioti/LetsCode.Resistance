@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LetsCode.Resistance.Domain;
-using LetsCode.Resistance.Infrastructure.Repository;
+﻿using LetsCode.Resistance.Domain;
+using LetsCode.Resistance.Infrastructure.Repository.Base;
+using LetsCode.Resistance.Infrastructure.Repository.Interface;
 using LetsCode.Resistance.Infrastructure.RequestModel;
 using LetsCode.Resistance.Infrastructure.Service.Interface;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LetsCode.Resistance.Infrastructure.Service
 {
     public class TradeService : ITradeService
     {
-        private readonly IRepository<Rebel> _rebelRepository;
-        private readonly IRepository<Price> _priceRepository;
+        private readonly IRebelRepository _rebelRepository;
+        private readonly IPriceRepository _priceRepository;
 
-        public TradeService(IRepository<Rebel> rebelRepository, IRepository<Price> priceRepository)
+        public TradeService(IRebelRepository rebelRepository, IPriceRepository priceRepository)
         {
             _rebelRepository = rebelRepository;
             _priceRepository = priceRepository;
@@ -26,21 +27,19 @@ namespace LetsCode.Resistance.Infrastructure.Service
             var buyerId = request?.Buyer?.RebelId;
             var sellerId = request?.Seller?.RebelId;
 
-            var buyer = await _rebelRepository.AsQueryable().Include(x => x.Inventory)
-                .FirstOrDefaultAsync(x => x.Id == buyerId);
+            var buyer = await _rebelRepository.GetByIdAsync(buyerId);
             if (buyer == null)
                 throw new TradeException("Buyer Not Found");
             if (buyer.IsTraitor)
                 throw new TradeException("Buyer is a Traitor and Can't Trade");
 
-            var seller = await _rebelRepository.AsQueryable().Include(x => x.Inventory)
-                .FirstOrDefaultAsync(x => x.Id == sellerId);
+            var seller = await _rebelRepository.GetByIdAsync(sellerId);
             if (seller == null)
                 throw new TradeException("Seller Not Found");
             if (seller.IsTraitor)
                 throw new TradeException("Seller is a Traitor and Can't Trade");
 
-            var prices = _priceRepository.AsQueryable().Distinct().ToList();
+            var prices = await _priceRepository.GetAllAsync();
             var sellerItems = request?.Seller?.TradingItems?.ToList() ?? new List<InventoryItemModel>();
             var buyerItems = request?.Buyer?.TradingItems?.ToList() ?? new List<InventoryItemModel>();
 

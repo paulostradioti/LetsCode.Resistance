@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LetsCode.Resistance.Infrastructure.Repository
+namespace LetsCode.Resistance.Infrastructure.Repository.Base
 {
     public interface IRepository<T> where T : class
     {

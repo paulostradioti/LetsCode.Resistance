@@ -4,6 +4,9 @@
 ## Further Work
 * Track the Treason Reports to avoid that the same Rebel reports the same traitor more then once
 * Map entities into response models to avoid expose unnecessary implementation/entity model details.
+* Move Trade logic and validation into it's own class in the domain
+* Increase Unit Test Coverage
+* Create Integration Tests
 
 
 ## Assumptions
@@ -12,3 +15,4 @@
 ## Comments on Decisions
 * I opted to use Automapper to map request and response models into database entities.
 * The Prices (in points) for each allowed Inventory item is stored in the database. This will simplify the process of allowing the trade of new items when necessary. All we have to do is to insert the new item name and price in the Price table and when an item of this type is passed in the Rebels inventory it will be ready to be traded.
+* Ideally the process of development would have used gitflow (feature branches) and pull requests instead of commits directly to the main branch, but this approach saved me some time.

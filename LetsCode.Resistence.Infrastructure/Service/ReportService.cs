@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using LetsCode.Resistance.Domain;
 using LetsCode.Resistance.Infrastructure.Repository;
+using LetsCode.Resistance.Infrastructure.Repository.Base;
+using LetsCode.Resistance.Infrastructure.Repository.Interface;
 using LetsCode.Resistance.Infrastructure.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +12,10 @@ namespace LetsCode.Resistance.Infrastructure.Service
 {
     public class ReportService : IReportService
     {
-        private readonly IRepository<Rebel> _rebelRepository;
-        private readonly IRepository<Price> _priceRepository;
+        private readonly IRebelRepository _rebelRepository;
+        private readonly IPriceRepository _priceRepository;
 
-        public ReportService(IRepository<Rebel> rebelRepository, IRepository<Price> priceRepository)
+        public ReportService(IRebelRepository rebelRepository, IPriceRepository priceRepository)
         {
             _rebelRepository = rebelRepository;
             _priceRepository = priceRepository;

@@ -307,7 +307,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    },\r\n    \"Inventory\": [\r\n        {\r\n            \"name\": \"Água\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"gender\": \"{{randomGender}}\",\r\n    \"location\": {\r\n        \"latitude\": {{$randomLatitude}},\r\n        \"longitude\": {{$randomLongitude}},\r\n        \"baseName\": \"{{$randomLoremWord}}\"\r\n    },\r\n    \"Inventory\": [\r\n        {\r\n            \"name\": \"Água\",\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
